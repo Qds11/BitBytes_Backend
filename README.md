@@ -6,5 +6,5 @@
 3. ```python app.py``` in terminal to run app
 
 ### Testing of API
-```http://127.0.0.1:5000/<your_api_endpoint>```in testing platform
+``` http://192.168.10.30:5000/<your_api_endpoint>```in testing platform
 
