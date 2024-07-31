@@ -15,7 +15,4 @@
 ### API Testing
 ``` <your_ip_address>:5000/<your_api_endpoint>```in testing platform
 
-### Running Container
-```docker compose up --build```  in cmd line
-
 e.g. ```http://192.168.1.158:5000/api/image_classification```
