@@ -7,10 +7,7 @@ import redis
 from . import music_generation_bp
 import os
 import uuid
-
-# Initialize Redis connection
-redis_client = redis.Redis(host='127.0.0.1', port=6379, db=0)
-print(redis_client)
+from ..redis_client import redis_client
 
 def load_model():
     model = MusicGen.get_pretrained('facebook/musicgen-small')
