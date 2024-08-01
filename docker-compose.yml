@@ -1,12 +1,17 @@
+  ###################################
+  # Music Generation microservice
+  ###################################
+
 services:
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
-  web:
-    build: .
+  music_generation:
+    build: ./music_generation
+    restart: always
     ports:
-      - "5000:5000"
+      - "5100:5100"
     depends_on:
       - redis
   img2img:
