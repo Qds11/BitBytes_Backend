@@ -7,7 +7,7 @@
 ## Dev Set-Up
 1. Clone repo
 2. Set-up virtual environment with python 3.10.7
-3.  ```pip install -r requirements.txt```  in cmd line
+3.  ```pip install --no-cache-dir -r requirements.txt```  in cmd line
 4. ```docker pull redis:latest``` in cmd line
 5. ```docker run --name my-redis-container -p 6379:6379 -d redis:latest``` in cmd line
 6. ```python run.py``` in cmd line to run app
