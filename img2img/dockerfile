@@ -1,0 +1,18 @@
+FROM python:3.10.14
+
+# Install bash, git and git lfs
+RUN apt-get update && apt-get install -y bash && apt-get install git && apt-get install git-lfs
+
+# Set the working directory in the container
+WORKDIR /OOTDiffusion
+
+# Copy the current directory contents into the container at /OOTDiffusion
+COPY . /OOTDiffusion
+
+# Change permission of setup.sh and run setup.sh
+RUN chmod +x /OOTDiffusion/setup.sh
+RUN bash && sh /OOTDiffusion/setup.sh
+
+EXPOSE 5000
+
+CMD ["flask", "--app", "app", "run"]

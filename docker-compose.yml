@@ -9,3 +9,12 @@ services:
       - "5000:5000"
     depends_on:
       - redis
+  img2img:
+    build: ./img2img
+    ports:
+      - "5000:5000"
+    volumes:
+      - img2img:/OOTDiffusion
+
+volumes:
+  img2img: 

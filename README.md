@@ -16,3 +16,13 @@
 ``` <your_ip_address>:5000/<your_api_endpoint>```in testing platform
 
 e.g. ```http://192.168.1.158:5000/api/image_classification```
+
+## img2img dev
+1. rent a gpu server, like runpod, if you do not have a gpu.
+2. cd img2img and run ``` ./setup.sh ``` This is for first time installation
+3. ``` flask --app app run" ``` to start the app
+
+## img2img deployment
+1. img2img container will be hosted on runpod
+2. ```docker-compose build img2img && docker-compose up -D img2img```
+3. It will take quite a while and the container will be 35Gb
