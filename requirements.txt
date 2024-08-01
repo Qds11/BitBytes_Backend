@@ -3,22 +3,20 @@ flask-cors
 Flask-Limiter
 redis
 
-
-av
-einops
 wheel
+av
 audiocraft
+einops
 flashy>=0.0.1
 hydra-core>=1.1
 hydra_colorlog
 julius
 num2words
 numpy
-streamlit
 sentencepiece
 spacy==3.5.2
-torch>=2.0.0
-torchaudio>=2.0.0
+torch==2.1.0 --index-url https://download.pytorch.org/whl/test/cu121
+torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/test/cu121
 huggingface_hub
 tqdm
 transformers>=4.31.0  # need Encodec there.
@@ -28,4 +26,3 @@ librosa
 gradio
 torchmetrics
 encodec
-pydub
