@@ -1,15 +1,17 @@
 from pathlib import Path
 import sys
-from PIL import Image
-from utils_ootd import get_mask_location
 
-PROJECT_ROOT = Path(__file__).absolute().parents[1].absolute()
+PROJECT_ROOT = Path(__file__).absolute().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
+from PIL import Image
 
-from preprocess.openpose.run_openpose import OpenPose
-from preprocess.humanparsing.run_parsing import Parsing
-from ootd.inference_ootd_hd import OOTDiffusionHD
-from ootd.inference_ootd_dc import OOTDiffusionDC
+from utils.utils_ootd import get_mask_location
+
+
+from utils.preprocess.openpose.run_openpose import OpenPose
+from utils.preprocess.humanparsing.run_parsing import Parsing
+from utils.ootd.inference_ootd_hd import OOTDiffusionHD
+from utils.ootd.inference_ootd_dc import OOTDiffusionDC
 
 
 import argparse

@@ -1,9 +1,13 @@
 import pdb
 from pathlib import Path
 import sys
+import sys
+from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).absolute().parents[0].absolute()
+# Determine the project root directory
+PROJECT_ROOT = Path(__file__).absolute().parents[2]  # Adjust the number based on your structure
 sys.path.insert(0, str(PROJECT_ROOT))
+
 import os
 import torch
 import numpy as np
@@ -11,7 +15,7 @@ import cv2
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from datasets.simple_extractor_dataset import SimpleFolderDataset
-from utils.transforms import transform_logits
+from utils.preprocess.humanparsing.utils.transforms import transform_logits
 from tqdm import tqdm
 from PIL import Image
 

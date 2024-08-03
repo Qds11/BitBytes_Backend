@@ -14,11 +14,18 @@
 import os
 import pdb
 
+import sys
+from pathlib import Path
+
+# Determine the project root directory
+PROJECT_ROOT = Path(__file__).absolute().parents[2]  # Adjust the number based on your structure
+sys.path.insert(0, str(PROJECT_ROOT))
+
 import cv2
 import numpy as np
 from PIL import Image
 from torch.utils import data
-from utils.transforms import get_affine_transform
+from utils.preprocess.humanparsing.utils.transforms import get_affine_transform
 
 
 class SimpleFolderDataset(data.Dataset):
