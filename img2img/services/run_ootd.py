@@ -12,8 +12,10 @@ from utils.preprocess.openpose.run_openpose import OpenPose
 from utils.preprocess.humanparsing.run_parsing import Parsing
 from utils.ootd.inference_ootd_hd import OOTDiffusionHD
 from utils.ootd.inference_ootd_dc import OOTDiffusionDC
+import os
 
-
+from dotenv import load_dotenv
+load_dotenv()
 import argparse
 parser = argparse.ArgumentParser(description='run ootd')
 parser.add_argument('--gpu_id', '-g', type=int, default=0, required=False)
@@ -27,6 +29,30 @@ parser.add_argument('--sample', type=int, default=4, required=False)
 parser.add_argument('--seed', type=int, default=-1, required=False)
 args = parser.parse_args()
 
+PATH = os.getenv('CHECKPOINT_PATH')
+VIT_PATH = PATH + "/clip-vit-large-patch14"
+VAE_PATH = PATH + "/ootd"
+UNET_PATH = PATH + "/ootd/ootd_dc/checkpoint-36000"
+MODEL_PATH = PATH + "/ootd"
+# print(os.path.isdir(PATH))
+# print(os.path.isdir(VIT_PATH), os.path.isdir(VAE_PATH), os.path.isdir(VIT_PATH), os.path.isdir(VIT_PATH))
+
+if not os.path.isdir(PATH):
+    print(f"Current working directory: {os.getcwd()}")
+    raise FileExistsError("Checkpoints does not exist")
+
+if not os.path.isdir(VIT_PATH):
+    print(f"Current working directory: {os.getcwd()}")
+    raise FileExistsError("VIT_PATH does not exist")
+if not os.path.isdir(VAE_PATH):
+    print(f"Current working directory: {os.getcwd()}")
+    raise FileExistsError("VAE_PATH does not exist")
+if not os.path.isdir(VIT_PATH):
+    print(f"Current working directory: {os.getcwd()}")
+    raise FileExistsError("UNET_PATH does not exist")
+if not os.path.isdir(VIT_PATH):
+    print(f"Current working directory: {os.getcwd()}")
+    raise FileExistsError("MODEL_PATH does not exist")
 
 openpose_model = OpenPose(args.gpu_id)
 parsing_model = Parsing(args.gpu_id)
@@ -46,9 +72,9 @@ n_samples = args.sample
 seed = args.seed
 
 if model_type == "hd":
-    model = OOTDiffusionHD(args.gpu_id)
+    model = OOTDiffusionHD(args.gpu_id, PATH)
 elif model_type == "dc":
-    model = OOTDiffusionDC(args.gpu_id)
+    model = OOTDiffusionDC(args.gpu_id, PATH)
 else:
     raise ValueError("model_type must be \'hd\' or \'dc\'!")
 

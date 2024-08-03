@@ -7,8 +7,6 @@ import os
 import torch
 import numpy as np
 from PIL import Image
-import cv2
-from dotenv import load_dotenv
 
 
 import random
@@ -26,16 +24,15 @@ import torch.nn.functional as F
 from transformers import AutoProcessor, CLIPVisionModelWithProjection
 from transformers import CLIPTextModel, CLIPTokenizer
 
-VIT_PATH = os.getenv('VIT_PATH')
-VAE_PATH = os.getenv('VAE_PATH')
-UNET_PATH = os.getenv('UNET_PATH')
-MODEL_PATH = os.getenv('MODEL_PATH')
 
 class OOTDiffusionDC:
 
-    def __init__(self, gpu_id):
+    def __init__(self, gpu_id, path):
         self.gpu_id = 'cuda:' + str(gpu_id)
-
+        VIT_PATH = path + "/clip-vit-large-patch14"
+        VAE_PATH = path + "/ootd"
+        UNET_PATH = path + "/ootd/ootd_dc/checkpoint-36000"
+        MODEL_PATH = path + "/ootd"
         vae = AutoencoderKL.from_pretrained(
             VAE_PATH,
             subfolder="vae",

@@ -18,7 +18,6 @@ from pipelines_ootd.unet_garm_2d_condition import UNetGarm2DConditionModel
 from pipelines_ootd.unet_vton_2d_condition import UNetVton2DConditionModel
 from diffusers import UniPCMultistepScheduler
 from diffusers import AutoencoderKL
-from dotenv import load_dotenv
 
 
 import torch.nn as nn
@@ -26,15 +25,15 @@ import torch.nn.functional as F
 from transformers import AutoProcessor, CLIPVisionModelWithProjection
 from transformers import CLIPTextModel, CLIPTokenizer
 
-VIT_PATH = os.getenv('VIT_PATH')
-VAE_PATH = os.getenv('VAE_PATH')
-UNET_PATH = os.getenv('UNET_PATH')
-MODEL_PATH = os.getenv('MODEL_PATH')
-
 class OOTDiffusionHD:
 
-    def __init__(self, gpu_id):
+    def __init__(self, gpu_id, path):
         self.gpu_id = 'cuda:' + str(gpu_id)
+        
+        VIT_PATH = path + "/clip-vit-large-patch14"
+        VAE_PATH = path + "/ootd"
+        UNET_PATH = path + "/ootd/ootd_dc/checkpoint-36000"
+        MODEL_PATH = path + "/ootd"
 
         vae = AutoencoderKL.from_pretrained(
             VAE_PATH,
