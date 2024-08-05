@@ -1,13 +1,17 @@
 # BitBytes_Backend
 
-## Dev Set-Up
-1. Clone repo
-2.  ```pip install -r requirements.txt```  in terminal
-3. ```python app.py``` in terminal to run app
+## Requirements
+1. Have Docker installed
 
-### Running Container
-2.  ```docker compose up --build```  in terminal
+## Dev Set-Up [Music Generation Service]
+1. Set-up virtual environment with python 3.10.7
+2.  ```pip install --no-cache-dir -r requirements.txt``  in cmd line
+3. ```docker pull redis:latest``` in cmd line
+4. ```docker run --name my-redis-container -p 6379:6379 -d redis:latest``` in cmd line
+5. ```python run.py``` in cmd line to run app
 
-### Testing of API
-``` http://192.168.10.30:5000/<your_api_endpoint>```in testing platform
+    ### API Testing
+    ``` <your_ip_address>:5100/<your_api_endpoint>```in testing platform
+
+    e.g. ```http://192.168.1.158:5100/api/image_classification```
 
