@@ -28,3 +28,7 @@ librosa
 gradio
 torchmetrics
 encodec
+
+#image classification
+tensorflow==2.15.0
+opencv-python
