@@ -1,15 +1,4 @@
 from flask import request, jsonify
-from . import image_classification_bp
-from ..limiter import limiter
-
-@image_classification_bp.route('/', methods=['GET'])
-@limiter.limit("1/minute")
-def classify_image():
-    # Add your image classification code here
-    print("hello")
-    return jsonify({'result': 'image classified'})
-
-from flask import request, jsonify
 from . import image_classification_bp  # Import the Blueprint from the same module
 import numpy as np
 import tensorflow as tf
@@ -87,24 +76,9 @@ def decode_predictions(predictions):
     usageLabel = usageLB.classes_[usageIdx]
 
     return {
-        "Category": {
-            "label": categoryLabel,
-            "probability": categoryProba[0][categoryIdx] * 100
-        },
-        "Gender": {
-            "label": genderLabel,
-            "probability": genderProba[0][genderIdx] * 100
-        },
-        "Base Colour": {
-            "label": baseColourLabel,
-            "probability": baseColourProba[0][baseColourIdx] * 100
-        },
-        "Season": {
-            "label": seasonLabel,
-            "probability": seasonProba[0][seasonIdx] * 100
-        },
-        "Usage": {
-            "label": usageLabel,
-            "probability": usageProba[0][usageIdx] * 100
-        }
+        "Category": categoryLabel,
+        "Gender": genderLabel,
+        "Colour": baseColourLabel,
+        "Season": seasonLabel,
+        "Usage": usageLabel
     }
