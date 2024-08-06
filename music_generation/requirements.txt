@@ -30,3 +30,7 @@ torchmetrics
 encodec
 openai
 python-dotenv
+
+#image classification
+tensorflow==2.15.0
+opencv-python
