@@ -12,35 +12,36 @@ os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import preprocess_input
 
-print("help")
 # Path to the models and binarizers directory
 MODELS_DIR = os.path.join(os.path.dirname(__file__), 'models')
 BINARIZERS_DIR = os.path.join(os.path.dirname(__file__), 'binarizers')
 TEST_IMG_DIR = os.path.join(os.path.dirname(__file__), 'images')
 IMAGE_DIMS = (60, 60, 3)
 
-print("hel2")
+
 # Load the pre-trained model
 model_path = os.path.join(MODELS_DIR, 'multi_output_model.h5')
 model = tf.keras.models.load_model(model_path)
 
+print("clothes classification model loaded")
 
-print("hel3")
+# Load the LabelBinarizers
+with open(os.path.join(BINARIZERS_DIR, 'articleTypeLB.pkl'), 'rb') as f:
+    articleTypeLB = pickle.load(f)
+with open(os.path.join(BINARIZERS_DIR, 'genderLB.pkl'), 'rb') as f:
+    genderLB = pickle.load(f)
+with open(os.path.join(BINARIZERS_DIR, 'baseColourLB.pkl'), 'rb') as f:
+    baseColourLB = pickle.load(f)
+with open(os.path.join(BINARIZERS_DIR, 'seasonLB.pkl'), 'rb') as f:
+    seasonLB = pickle.load(f)
+with open(os.path.join(BINARIZERS_DIR, 'usageLB.pkl'), 'rb') as f:
+    usageLB = pickle.load(f)
+
+print("label binarizers loaded")
 
 @image_classification_bp.route('/', methods=['POST'])
 @limiter.limit("1/minute")
 def classify_image():
-    # Load the LabelBinarizers
-    with open(os.path.join(BINARIZERS_DIR, 'articleTypeLB.pkl'), 'rb') as f:
-        articleTypeLB = pickle.load(f)
-    with open(os.path.join(BINARIZERS_DIR, 'genderLB.pkl'), 'rb') as f:
-        genderLB = pickle.load(f)
-    with open(os.path.join(BINARIZERS_DIR, 'baseColourLB.pkl'), 'rb') as f:
-        baseColourLB = pickle.load(f)
-    with open(os.path.join(BINARIZERS_DIR, 'seasonLB.pkl'), 'rb') as f:
-        seasonLB = pickle.load(f)
-    with open(os.path.join(BINARIZERS_DIR, 'usageLB.pkl'), 'rb') as f:
-        usageLB = pickle.load(f)
     # if 'file' not in request.files:
     #     return jsonify({"error": "No file part in the request"}), 400
 
@@ -83,10 +84,4 @@ def decode_predictions(predictions):
     seasonLabel = seasonLB.classes_[seasonIdx]
     usageLabel = usageLB.classes_[usageIdx]
 
-    return {
-        "Category": categoryLabel,
-        "Gender": genderLabel,
-        "Colour": baseColourLabel,
-        "Season": seasonLabel,
-        "Usage": usageLabel
-    }
+    return f"Category:{categoryLabel}, Gender:{genderLabel}, Colour:{baseColourLabel}, Season:{seasonLabel}, Usage:{usageLabel}"

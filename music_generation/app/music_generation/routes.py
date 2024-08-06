@@ -5,7 +5,6 @@ import torchaudio
 from audiocraft.models import MusicGen
 import redis
 from . import music_generation_bp
-import os
 import uuid
 from ..redis_client import redis_client
 
