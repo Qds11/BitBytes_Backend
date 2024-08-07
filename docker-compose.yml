@@ -7,11 +7,12 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
-  music_generation:
-    build: ./music_generation
-    restart: always
+  music_generation_service:
+    image: music_generation_service:latest
     ports:
       - "5100:5100"
     depends_on:
       - redis
+    env_file:
+      - ./music_generation/.env
 

@@ -16,8 +16,8 @@ numpy
 sentencepiece
 spacy==3.5.2
 --extra-index-url https://download.pytorch.org/whl/test/cu121
-torch==2.1.0 
-torchaudio==2.1.0 
+torch==2.1.0
+torchaudio==2.1.0
 
 huggingface_hub
 tqdm
@@ -33,4 +33,4 @@ python-dotenv
 
 #image classification
 tensorflow==2.15.0
-opencv-python
+opencv-python-headless

@@ -1,5 +1,7 @@
 FROM python:3.10-slim-buster
 
+# RUN apt-get install -y libgl1-mesa-dev
+
 WORKDIR /bitbytes_backend/music_generation
 
 COPY . /bitbytes_backend/music_generation/
