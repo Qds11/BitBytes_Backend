@@ -32,7 +32,7 @@ category_dict_utils = ['upper_body', 'lower_body', 'dresses']
 
 # modelType = "hd" or "dc"
 # category = 0:upperbody; 1:lowerbody; 2:dress
-def generateImage(gpuId = 1,modelType = "hd", category = "upperbody" , clothImage=None, modelSelection=None, imageScale=2.0, nSteps=20, nSamples=4, seed=1):
+def generateImage(gpuId = 0,modelType = "hd", category = "upperbody" , clothImage=None, modelSelection=None, imageScale=2.0, nSteps=20, nSamples=4, seed=1):
     PATH = os.getenv('CHECKPOINT_PATH')
     checkPath(PATH)
 
