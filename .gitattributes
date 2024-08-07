@@ -1,3 +1,4 @@
 music_generation/app/image_classification/models/** filter=lfs diff=lfs merge=lfs -text
 music_generation/app/image_classification/images/** filter=lfs diff=lfs merge=lfs -text
 music_generation/app/image_classification/binarizers/** filter=lfs diff=lfs merge=lfs -text
+assets/** filter=lfs diff=lfs merge=lfs -text

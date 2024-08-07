@@ -8,9 +8,11 @@ services:
     ports:
       - "6379:6379"
   music_generation_service:
-    image: music_generation_service:latest
+    image: testvolume4:latest
     ports:
       - "5100:5100"
+    volumes:
+      - ./assets:/app/assets
     depends_on:
       - redis
     env_file:

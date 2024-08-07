@@ -13,9 +13,12 @@ import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import preprocess_input
 
 # Path to the models and binarizers directory
-MODELS_DIR = os.path.join(os.path.dirname(__file__), 'models')
-BINARIZERS_DIR = os.path.join(os.path.dirname(__file__), 'binarizers')
-TEST_IMG_DIR = os.path.join(os.path.dirname(__file__), 'images')
+# MODELS_DIR = os.path.join(os.path.dirname(__file__), 'models')
+# BINARIZERS_DIR = os.path.join(os.path.dirname(__file__), 'binarizers')
+MODELS_DIR='/app/assets/models'
+BINARIZERS_DIR='/app/assets/binarizers'
+TEST_IMG_DIR='/app/assets/images'
+# TEST_IMG_DIR = os.path.join(os.path.dirname(__file__), 'images')
 IMAGE_DIMS = (60, 60, 3)
 
 
