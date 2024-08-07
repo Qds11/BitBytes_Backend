@@ -39,7 +39,7 @@ def generate():
     if file and allowed_file(file.filename):
         # filename = secure_filename(file.filename)
         try:
-            generatedImagesURLs = generateImage(1,modelType, category, file, modelSelection, imageScale, nSteps, nSamples, seed)
+            generatedImagesURLs = generateImage(0,modelType, category, file, modelSelection, imageScale, nSteps, nSamples, seed)
         except AttributeError as e:
             print(e)
             raise InvalidAPIUsage("Something went wrong",500)
