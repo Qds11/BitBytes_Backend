@@ -4,7 +4,8 @@ import sys
 PROJECT_ROOT = Path(__file__).absolute().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 from PIL import Image
-
+from services.S3Service import S3BucketWrapper
+from utils.APIError import InvalidAPIUsage
 from utils.utils_ootd import get_mask_location
 from utils.preprocess.openpose.run_openpose import OpenPose
 from utils.preprocess.humanparsing.run_parsing import Parsing
@@ -32,14 +33,13 @@ category_dict_utils = ['upper_body', 'lower_body', 'dresses']
 # modelType = "hd" or "dc"
 # category = 0:upperbody; 1:lowerbody; 2:dress
 def generateImage(gpuId = 1,modelType = "hd", category = "upperbody" , clothImage=None, modelSelection=None, imageScale=2.0, nSteps=20, nSamples=4, seed=1):
-    print(gpuId,modelType,category, clothImage, modelSelection, imageScale, nSteps, nSamples, seed)
     PATH = os.getenv('CHECKPOINT_PATH')
     checkPath(PATH)
 
     openpose_model = OpenPose(gpuId)
     parsing_model = Parsing(gpuId)
 
-    model = modelSelection(modelType, gpuId, PATH)
+    model = modelValidationSelection(modelType, gpuId, PATH)
 
     clothImg = Image.open(clothImage).resize((768, 1024))
     modelImg = Image.open(modelSelection).resize((768, 1024))
@@ -66,12 +66,21 @@ def generateImage(gpuId = 1,modelType = "hd", category = "upperbody" , clothImag
         seed=seed,
     )
 
-    return images
+    s3Bucket = S3BucketWrapper("bitbytebucket")
+    res = []
+    for image in images:
+        url = s3Bucket.put(image)
+        if url:
+            res.append(url)
+        else:
+            raise InvalidAPIUsage("Something went wrong when uploading image", status_code=500)
+
+    return res
 
 def validateAndCreatePath(path: str):
     if not os.path.isdir(path):
-        print(f"Current working directory: {os.getcwd()}")
-        raise FileExistsError("Checkpoints does not exist")
+        print(f"Current working directory: {os.getcwd()} and Checkpoints does not exist")
+        raise InvalidAPIUsage("Internal Server error", 500)
 
 def checkPath(PATH: str):
     VIT_PATH = PATH + "/clip-vit-large-patch14"
@@ -82,12 +91,18 @@ def checkPath(PATH: str):
     for path in pathList:
         validateAndCreatePath(path)
 
-def modelSelection(modelType, gpuId, PATH):
+def modelValidationSelection(modelType, gpuId, PATH):
     model = None
     if modelType == "hd":
         model = OOTDiffusionHD(gpuId, PATH)
     elif modelType == "dc":
         model = OOTDiffusionDC(gpuId, PATH)
     else:
-        raise ValueError("model_type must be \'hd\' or \'dc\'!")
+        raise InvalidAPIUsage("modelType must be \'hd\' or \'dc\'!", 400)
     return model
+
+def validateGenerateImageRequest(file, params):
+    if file == None or file.filename == '':
+        raise InvalidAPIUsage("Bad Request. No file is found", 400)
+    if params == None:
+        raise InvalidAPIUsage("Bad Request. No file is found", 400)

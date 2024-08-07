@@ -4,10 +4,10 @@ import sys, json, random
 PROJECT_ROOT = Path(__file__).absolute().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from flask import Blueprint, request, jsonify, send_from_directory,send_file
-from werkzeug.utils import secure_filename
-from werkzeug.datastructures import ImmutableMultiDict
-from services.OOTDiffusionService import generateImage
+from flask import Blueprint, request
+from services.OOTDiffusionService import generateImage, validateGenerateImageRequest
+from services.S3Service import hello_s3
+from utils.APIError import InvalidAPIUsage
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
@@ -18,26 +18,15 @@ OOTDiffusionRoutes = Blueprint('OOTDiffusionRoutes', __name__)
 
 @OOTDiffusionRoutes.route('/test', methods=['GET'])
 def test():
-    return 'it works!'
+    file = request.files['file']
+    url = hello_s3(file)
+    return {"message": url}, 200
 
 @OOTDiffusionRoutes.route('/generate', methods=['POST'])
 def generate():
     params = json.loads(request.form.get('params'))
     file = request.files['file']
-    
-    if file == None:
-        return {
-            "message": "Bad request. No file found"
-        }, 400
-    if params == None:
-        return {
-            "message": "Bad request. No params found"
-        }, 400
-    
-    if file.filename == '':
-        return {
-            "message": "Bad filename"
-        }, 400
+    validateGenerateImageRequest(file,params)
     
     modelType = params.get('modelType')
     category = params.get('category')
@@ -49,7 +38,10 @@ def generate():
 
     if file and allowed_file(file.filename):
         # filename = secure_filename(file.filename)
-        # TODO: Can't seem to send back a list of files. Maybe use S3 and send back a list of urls?
-        generateImage(1,modelType, category, file, modelSelection, imageScale, nSteps, nSamples, seed)
+        try:
+            generatedImagesURLs = generateImage(1,modelType, category, file, modelSelection, imageScale, nSteps, nSamples, seed)
+        except AttributeError as e:
+            print(e)
+            raise InvalidAPIUsage("Something went wrong",500)
         # return send_file(modelMap[3], mimetype='image/png')
-        return {"message": "Success"},200
+        return {"message": generatedImagesURLs},200
