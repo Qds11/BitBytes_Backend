@@ -40,9 +40,10 @@ def generateImage(gpuId = 0,modelType = "hd", category = 0 , clothImage=None, mo
     parsing_model = Parsing(gpuId)
 
     model = modelValidationSelection(modelType, gpuId, PATH)
+    modelPath = modelMap[modelSelection]
 
     clothImg = Image.open(clothImage).resize((768, 1024))
-    modelImg = Image.open(modelSelection).resize((768, 1024))
+    modelImg = Image.open(modelPath).resize((768, 1024))
     keypoints = openpose_model(modelImg.resize((384, 512)))
     model_parse, _ = parsing_model(modelImg.resize((384, 512)))
 
