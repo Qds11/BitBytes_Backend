@@ -19,7 +19,12 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - img2img:/OOTDiffusion
+      - img2img:/img2img
+    environment:
+      - CHECKPOINT_PATH=${CHECKPOINT_PATH}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - S3_Bucket=${S3_Bucket}
 
 volumes:
   img2img: 
