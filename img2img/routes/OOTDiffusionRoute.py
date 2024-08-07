@@ -28,13 +28,13 @@ def generate():
     file = request.files['file']
     validateGenerateImageRequest(file,params)
     
-    modelType = params.get('modelType', 'hd')  # Default to 'hd' if not provided
-    category = int(params.get('category', 0))  # Default to 0 if not provided
-    modelSelection = int(params.get('modelSelection', 0))  # Default to 0 if not provided
-    imageScale = float(params.get('imageScale', 2.0))  # Default to 2.0 if not provided
-    nSteps = int(params.get('nSteps', 20))  # Default to 20 if not provided
-    nSamples = int(params.get('nSamples', 4))  # Default to 4 if not provided
-    seed = int(params.get('seed', random.randint(0, 2**32 - 1)))  # Random if not provided
+    modelType = params.get('modelType')
+    category = int(params.get('category'))
+    modelSelection = int(params.get('modelSelection'))
+    imageScale = float(params.get('imageScale'))
+    nSteps = int(params.get('nSteps'))
+    nSamples = int(params.get('nSamples')) 
+    seed = random.randint(0, 2**32 - 1)
 
     if file and allowed_file(file.filename):
         # filename = secure_filename(file.filename)
