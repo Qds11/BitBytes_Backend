@@ -33,7 +33,7 @@ def generate():
     modelSelection = int(params.get('modelSelection'))
     imageScale = float(params.get('imageScale'))
     nSteps = int(params.get('nSteps'))
-    nSamples = int(params.get('nSamples')) 
+    nSamples = int(params.get('nSamples'))
     seed = random.randint(0, 2**32 - 1)
 
     if file and allowed_file(file.filename):

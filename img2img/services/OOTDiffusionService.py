@@ -11,7 +11,7 @@ from utils.preprocess.openpose.run_openpose import OpenPose
 from utils.preprocess.humanparsing.run_parsing import Parsing
 from utils.ootd.inference_ootd_hd import OOTDiffusionHD
 from utils.ootd.inference_ootd_dc import OOTDiffusionDC
-import os
+import os,io
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -50,9 +50,11 @@ def generateImage(gpuId = 0,modelType = "hd", category = 0 , clothImage=None, mo
     mask, mask_gray = get_mask_location(modelType, category_dict_utils[category], model_parse, keypoints)
     mask = mask.resize((768, 1024), Image.NEAREST)
     mask_gray = mask_gray.resize((768, 1024), Image.NEAREST)
-    
+
     masked_vton_img = Image.composite(mask_gray, modelImg, mask)
-    # masked_vton_img.save('./images/images_output/mask.jpg')
+#    masked_vton_img.save('./images/images_output/mask.jpg')
+#    unet_vton.enable_xformers_memory_efficient_attention()
+#    unet_garm.enable_xformers_memory_efficient_attention()
     try:
         images = model(
             model_type=modelType,
@@ -70,7 +72,10 @@ def generateImage(gpuId = 0,modelType = "hd", category = 0 , clothImage=None, mo
         s3Bucket = S3BucketWrapper("bitbytebucket")
         res = []
         for image in images:
-            url = s3Bucket.put(image)
+            image_byte_array = io.BytesIO()
+            image.save(image_byte_array, format='PNG')
+            image_byte_array.seek(0)  # Move the cursor to the start of the stream
+            url = s3Bucket.put(image_byte_array)
             if url:
                 res.append(url)
             else:
