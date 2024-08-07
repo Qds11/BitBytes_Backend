@@ -52,30 +52,33 @@ def generateImage(gpuId = 0,modelType = "hd", category = 0 , clothImage=None, mo
     
     masked_vton_img = Image.composite(mask_gray, modelImg, mask)
     # masked_vton_img.save('./images/images_output/mask.jpg')
+    try:
+        images = model(
+            model_type=modelType,
+            category=category_dict[category],
+            image_garm=clothImg,
+            image_vton=masked_vton_img,
+            mask=mask,
+            image_ori=modelImg,
+            num_samples= nSamples,
+            num_steps= nSteps,
+            image_scale= imageScale,
+            seed=seed,
+        )
 
-    images = model(
-        model_type=modelType,
-        category=category_dict[category],
-        image_garm=clothImg,
-        image_vton=masked_vton_img,
-        mask=mask,
-        image_ori=modelImg,
-        num_samples= nSamples,
-        num_steps= nSteps,
-        image_scale= imageScale,
-        seed=seed,
-    )
+        s3Bucket = S3BucketWrapper("bitbytebucket")
+        res = []
+        for image in images:
+            url = s3Bucket.put(image)
+            if url:
+                res.append(url)
+            else:
+                raise InvalidAPIUsage("Something went wrong when uploading image", status_code=500)
 
-    s3Bucket = S3BucketWrapper("bitbytebucket")
-    res = []
-    for image in images:
-        url = s3Bucket.put(image)
-        if url:
-            res.append(url)
-        else:
-            raise InvalidAPIUsage("Something went wrong when uploading image", status_code=500)
+        return res
+    except Exception as e:
+        raise InvalidAPIUsage(e, status_code=500)
 
-    return res
 
 def validateAndCreatePath(path: str):
     if not os.path.isdir(path):
