@@ -8,7 +8,7 @@ services:
     ports:
       - "6379:6379"
   music_generation_service:
-    image: testvolume4:latest
+    image: musicgenerationservice:latest
     ports:
       - "5100:5100"
     volumes:

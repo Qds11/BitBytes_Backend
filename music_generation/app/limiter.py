@@ -9,7 +9,7 @@ limiter = Limiter(
     key_func=get_remote_address,
     # Redis is the backend for storing rate limit data
     storage_uri=redis_uri
-    # storage_uri='redis://redis:6379'
+    #storage_uri='redis://redis:6379'
     # local storage
     #storage_uri='memory://'
 )
