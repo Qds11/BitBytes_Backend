@@ -24,3 +24,4 @@ e.g. ```http://192.168.1.158:5100/api/image_classification```
 1. img2img container will be hosted on runpod
 2. ```docker-compose build img2img && docker-compose up -D img2img```
 3. It will take quite a while and the container will be 35Gb
+4. TODO: Upload the dockerfile container onto runpod or vastai as the service uses GPU extensively

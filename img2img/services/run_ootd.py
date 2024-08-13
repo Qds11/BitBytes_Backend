@@ -1,3 +1,4 @@
+# This is used as reference, ignore this. The function is refactored into OOTDiffusionService.py
 from pathlib import Path
 import sys
 
