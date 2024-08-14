@@ -22,5 +22,5 @@
 3. Edit env file path in yml file if your differs
 4. ```docker compose up``` in cmd line
 ### Demo
-Click on image below to view demo 
+Click on image to view demo 
 [![Music Generation Service Demo](https://img.youtube.com/vi/ZrmfwJmS-Tw/0.jpg)](https://www.youtube.com/watch?v=ZrmfwJmS-Tw)
