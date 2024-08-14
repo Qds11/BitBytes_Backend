@@ -10,8 +10,14 @@
 4. ```docker run --name my-redis-container -p 6379:6379 -d redis:latest``` in cmd line
 5. ```python run.py``` in cmd line to run app
 
-    ### API Testing
-    ``` <your_ip_address>:5100/<your_api_endpoint>```in testing platform
-
-    e.g. ```http://192.168.1.158:5100/api/image_classification```
+## Run Service [Music Generation Service]
+1. Download yml file
+2. Create .env file with the following variables
+    ```
+    OPENAI_API_KEY= <your_openai_api_key>
+    REDIS_HOST=redis
+    REDIS_PORT=6379
+    REDIS_DB=0```
+3. Edit env file path in yml file if your differs
+4. ```docker compose up``` in cmd line
 
