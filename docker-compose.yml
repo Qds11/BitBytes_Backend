@@ -8,7 +8,7 @@ services:
     ports:
       - "6379:6379"
   music_generation_service:
-    image: musicgenerationservice:latest
+    image: qfgy12/music_generation_service:v1.0
     ports:
       - "5100:5100"
     volumes:
