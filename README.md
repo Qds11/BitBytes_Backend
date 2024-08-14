@@ -1,16 +1,16 @@
 # BitBytes_Backend
 
-## Requirements
+### Requirements
 1. Have Docker installed
-
-## Dev Set-Up [Music Generation Service]
+## Music Generation Service
+### Dev Set-Up 
 1. Set-up virtual environment with python 3.10.7
-2.  ```pip install --no-cache-dir -r requirements.txt``  in cmd line
+2.  ```pip install --no-cache-dir -r requirements.txt```  in cmd line
 3. ```docker pull redis:latest``` in cmd line
 4. ```docker run --name my-redis-container -p 6379:6379 -d redis:latest``` in cmd line
 5. ```python run.py``` in cmd line to run app
 
-## Run Service [Music Generation Service]
+### Run Service 
 1. Download yml file
 2. Create .env file with the following variables
     ```
@@ -21,4 +21,6 @@
     ```
 3. Edit env file path in yml file if your differs
 4. ```docker compose up``` in cmd line
-
+### Demo
+Click on image below to view demo 
+[![Music Generation Service Demo](https://img.youtube.com/vi/ZrmfwJmS-Tw/0.jpg)](https://www.youtube.com/watch?v=ZrmfwJmS-Tw)
