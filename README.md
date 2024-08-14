@@ -17,7 +17,8 @@
     OPENAI_API_KEY= <your_openai_api_key>
     REDIS_HOST=redis
     REDIS_PORT=6379
-    REDIS_DB=0```
+    REDIS_DB=0
+    ```
 3. Edit env file path in yml file if your differs
 4. ```docker compose up``` in cmd line
 
