@@ -1,12 +1,12 @@
-  ###################################
-  # Music Generation microservice
-  ###################################
 
 services:
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
+  ###################################
+  # Music Generation microservice
+  ###################################
   music_generation_service:
     image: qfgy12/music_generation_service:v1.0
     ports:
@@ -15,6 +15,12 @@ services:
       - ./assets:/app/assets
     depends_on:
       - redis
+    env_file:
+      - ./music_generation/.env
+
+  ###################################
+  # Image-to-image microservice
+  ###################################
   img2img:
     build: ./img2img
     ports:
@@ -26,5 +32,3 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - S3_Bucket=${S3_Bucket}
-    env_file:
-      - ./music_generation/.env
