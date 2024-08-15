@@ -15,8 +15,10 @@ num2words
 numpy
 sentencepiece
 spacy==3.5.2
-torch==2.1.0 --index-url https://download.pytorch.org/whl/test/cu121
-torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/test/cu121
+--extra-index-url https://download.pytorch.org/whl/test/cu121
+torch==2.1.0
+torchaudio==2.1.0
+
 huggingface_hub
 tqdm
 transformers>=4.31.0  # need Encodec there.
@@ -26,3 +28,9 @@ librosa
 gradio
 torchmetrics
 encodec
+openai
+python-dotenv
+
+#image classification
+tensorflow==2.15.0
+opencv-python-headless
