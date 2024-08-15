@@ -9,9 +9,8 @@
 3. ```docker pull redis:latest``` in cmd line
 4. ```docker run --name my-redis-container -p 6379:6379 -d redis:latest``` in cmd line
 5. ```python run.py``` in cmd line to run app
-
-### Run Service
-1. Download yml file
+### Testing
+1. Switch to branch music_generation_service_image
 2. Create .env file with the following variables
     ```
     OPENAI_API_KEY= <your_openai_api_key>
@@ -21,6 +20,23 @@
     ```
 3. Edit env file path in yml file if your differs
 4. ```docker compose up``` in cmd line
+5. Call image_classfication api with clothing image as input
+    ```
+    localhost:5100/api/image_classification
+    ```
+    ![image](https://github.com/user-attachments/assets/fcd170f1-6081-418a-afa7-1b26b417fd4a)
+
+6. Use image_classification api output as input for music_generation_prompt
+   ```
+   localhost:5100/api/music_generation_prompt
+   ```
+   ![image](https://github.com/user-attachments/assets/770b44eb-dd7d-459e-9a89-a3e01f83d056)
+7. Use music_generation_prompt output as inout for music_generation api. It will take a while for the music to be generated.
+   ```
+    localhost:5100/api/music_generation
+   ```
+   ![image](https://github.com/user-attachments/assets/323bdb04-0712-4f6f-99bd-d068fa9299f2)
+
 ### Demo
 Click on image to view demo
 [![Music Generation Service Demo](https://img.youtube.com/vi/ZrmfwJmS-Tw/0.jpg)](https://www.youtube.com/watch?v=ZrmfwJmS-Tw)
@@ -33,7 +49,7 @@ Click on image to view demo
 2. cd img2img and run ``` ./setup.sh ``` This is for first time installation
 3. ``` flask --app app run" ``` to start the app
 
-### Deployment Set-Up 
+### Deployment Set-Up
 1. img2img container will be hosted on runpod
 2. ```docker-compose build img2img && docker-compose up -D img2img```
 3. It will take quite a while and the container will be 35Gb
