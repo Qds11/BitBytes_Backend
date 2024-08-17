@@ -8,7 +8,7 @@ bash
 AWS S3
 
 ## Todo
-1. Test the app ensure that the cloth is integrated properly
+1. Test the app ensure that the cloth is integrated properly. Maybe can use the seeds provided below, I have tested over 200 seeds and found that those two look great
 
 ## How to host it on runpod
 1. Under Pods and clicking Deploy button on the top left, select RTX 2000 Ada
@@ -40,15 +40,25 @@ AWS S3
 9. seed. It initializes the random number generator for the image generation process. By setting a specific seed value, you can ensure that the generated images are reproducible. Recommended Seeds are 
 10. The response will be an url to an image stored in S3 Bucket. You can view it in the browser from the url
 
-## Routes
-The routes can be found in routes/OOTDiffusionRoute.py . The generate route consists of validating the requests and then generate an output image using generateImage function from services/OOTDiffusionService.py
-
-## Services
-The services can be found in services/*.py . Please ignore the run_ootd.py as it was the old way of running the package but it can be used as a reference as the services were built around it so that the package can be exposed as an api. OOTDiffusionService.py is where the magic happens while S3Service.py is responsible for putting the output image into the S3 bucket.
-
 ## Useful Seeds to use
 1. 3661457687
 2. 3661457785
+
+## What is in Routes folder
+The routes can be found in routes/OOTDiffusionRoute.py . The generate route consists of validating the requests and then generate an output image using generateImage function from services/OOTDiffusionService.py
+
+## What is in Services folder
+The services can be found in services/*.py . Please ignore the run_ootd.py as it was the old way of running the package but it can be used as a reference as the services were built around it so that the package can be exposed as an api. OOTDiffusionService.py is where the magic happens while S3Service.py is responsible for putting the output image into the S3 bucket.
+
+## What does the setup.sh do?
+1. It will install the necessary python dependencies first
+2. Next, it will change directory to utils/checkpoints folder
+3. Then, git clone the models that the OOTDiffusion uses into the checkpoints folder
+4. Finally, remove the unnecessary files in the checkpoints folder
+
+## Important
+1. Please do not use more than 1 for nSamples as the container may run out of memory. 
+2. If the response returns an error, it is normally out of memory. Tweak the image scale or nSteps accordingly. The best parameters for those can be found in this [postman collections](./assets/img2img.postman_collection.json)
 
 ## Enviroment Variables to put in img2img folder
 1. CHECKPOINT_PATH

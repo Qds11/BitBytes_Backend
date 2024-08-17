@@ -1,0 +1,35 @@
+{
+	"info": {
+		"_postman_id": "d27da939-2242-4c9c-a233-e83b5d49bdb3",
+		"name": "img2img",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29388505"
+	},
+	"item": [
+		{
+			"name": "https://98wpfukhzacd5w-5000.proxy.runpod.net/generate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/wk989/Desktop/BitBytes_Backend/img2img/images/garment/00055_00.jpg"
+						},
+						{
+							"key": "params",
+							"value": "{\n\"modelType\": \"hd\",\n\"category\": \"0\",\n\"modelSelection\": \"0\",\n\"imageScale\": \"2.0\",\n\"nSteps\": \"20\",\n\"nSamples\":\"1\"\n}",
+							"contentType": "application/json",
+							"type": "text"
+						}
+					]
+				},
+				"url": "https://98wpfukhzacd5w-5000.proxy.runpod.net/generate"
+			},
+			"response": []
+		}
+	]
+}
