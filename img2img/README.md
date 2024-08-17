@@ -1,9 +1,31 @@
-The package is done by OOTDiffusion team. https://github.com/levihsu/OOTDiffusion
+The package is done by OOTDiffusion team, please check them out. https://github.com/levihsu/OOTDiffusion
 
 The package has been converted into flask restful API.
 
+## Tech stack used
+python3.10
+bash
+AWS S3
+
 ## Todo
-1. Test the app
+1. Test the app ensure that the cloth is integrated properly
+
+## How to host it on runpod
+1. Under Pods and clicking Deploy button on the top left, select RTX 2000 Ada
+2. Choose any template but preferred RunPod Pytorch 2.0.1 or RunPod Desktop. 
+3. Click edit template under Pod template and sure that Container Disk is 80GB and Volume Disk is 0 GB. Click Set Overrides afterwards. Ensure that 5000 is added to Expose HTTP Ports.
+![alt text](./images/templateOptions.png)
+4. Click Deploy on-demand
+5. Ensure that you have created private keys and public keys using rsa command. You can read more on here (https://docs.runpod.io/pods/configuration/use-ssh)
+
+## Commands to run on runpod container
+1. apt update -y && upgrade -y
+2. apt install git-lfs -y
+3. apt install nano -y
+4. use access token to git clone this repo
+5. cd BITBYTES_BACKEND/img2img
+6. bash setup.sh
+7. gunicorn --bind 0.0.0.0:5000 app:app
 
 ## How to use the API
 1. Send a POST request to /generate endpoint
@@ -15,11 +37,21 @@ The package has been converted into flask restful API.
 6. imageScale. The parameter allows you to scale the generated image. This can be useful if you need the output image to be of a specific size. The default value is 1.0, meaning no scaling. You can adjust this value to scale the image up or down as needed. Higher value means more computing.
 7. nSteps. It determines the number of steps the model takes during the image generation process. More steps generally result in higher quality images but also increase the computation time. 
 8. nSamples. It determines how many images it will generate. Best to keep it at 1 as it consumes alot of computation beyond 1.
-9. seed. It initializes the random number generator for the image generation process. By setting a specific seed value, you can ensure that the generated images are reproducible. Recommended Seeds are 3661457687, 3661457785
-10. The response will be an url to an image stored in S3 Bucket.
+9. seed. It initializes the random number generator for the image generation process. By setting a specific seed value, you can ensure that the generated images are reproducible. Recommended Seeds are 
+10. The response will be an url to an image stored in S3 Bucket. You can view it in the browser from the url
 
-## Enviroment Variables
-CHECKPOINT_PATH
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
-S3_Bucket
+## Routes
+The routes can be found in routes/OOTDiffusionRoute.py . The generate route consists of validating the requests and then generate an output image using generateImage function from services/OOTDiffusionService.py
+
+## Services
+The services can be found in services/*.py . Please ignore the run_ootd.py as it was the old way of running the package but it can be used as a reference as the services were built around it so that the package can be exposed as an api. OOTDiffusionService.py is where the magic happens while S3Service.py is responsible for putting the output image into the S3 bucket.
+
+## Useful Seeds to use
+1. 3661457687
+2. 3661457785
+
+## Enviroment Variables to put in img2img folder
+1. CHECKPOINT_PATH
+2. AWS_ACCESS_KEY_ID
+3. AWS_SECRET_ACCESS_KEY
+4. S3_Bucket
